@@ -67,7 +67,7 @@ const DonerLists = async () => {
         </Dialog>
       </div>
 
-      <DonerTable data={donerLists} />
+      <DonerTable data={donerLists || []} />
     </>
   );
 };

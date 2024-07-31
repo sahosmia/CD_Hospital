@@ -35,15 +35,16 @@ import {
 import { useState } from "react";
 import Link from "next/link";
 
-export type DataType = {
-  _id: string;
-  name: string;
-  address: string;
-  phone: string;
-  facebook: null;
-  blood_group: { _id: string; name: string };
-  status: boolean;
-}[];
+export type DataType =
+  | {
+      _id: string;
+      name: string;
+      address: string;
+      phone: string;
+      facebook: null;
+      blood_group: { _id: string; name: string };
+      status: boolean;
+    }[];
 
 export const columns: ColumnDef<DataType[number]>[] = [
   {
