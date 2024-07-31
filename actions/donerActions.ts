@@ -5,8 +5,8 @@ import { revalidatePath } from "next/cache";
 
 // * getDoners
 export const getDoners = async () => {
+  await connectMongo();
   try {
-    await connectMongo();
     const collections = await Doner.find().populate("blood_group");
 
     // Convert ObjectId to string
@@ -23,9 +23,9 @@ export const getDoners = async () => {
 
     console.log(formattedCollections);
     return formattedCollections;
-  } catch (err) {
+  } catch (err: any) {
     console.error("Error getting doners:", err);
-    throw new Error("Failed to fetch doners");
+    // throw new Error("Failed to fetch doners");
   }
 };
 
@@ -41,8 +41,8 @@ export const storeDoner = async (formData: FormData) => {
     status: formData.get("status") === "true", // Convert to boolean
   };
 
+  await connectMongo();
   try {
-    await connectMongo();
     // Insert into database
     await new Doner(collectionData).save();
     // Revalidate users
@@ -65,8 +65,8 @@ export const updateDoner = async (id: string, formData: FormData) => {
     status: formData.get("status") === "true", // Convert to boolean
   };
 
+  await connectMongo();
   try {
-    await connectMongo();
     // Update existing document
     await Doner.findByIdAndUpdate(id, collectionData, { new: true });
     // Revalidate users
@@ -79,8 +79,8 @@ export const updateDoner = async (id: string, formData: FormData) => {
 
 // * deleteDoner
 export const deleteDoner = async (id: string) => {
+  await connectMongo();
   try {
-    await connectMongo();
     // Delete doner
     await Doner.findByIdAndDelete(id);
     // Revalidate users
@@ -93,8 +93,8 @@ export const deleteDoner = async (id: string) => {
 
 // * statusDoner
 export const statusDoner = async (id: string, status: boolean) => {
+  await connectMongo();
   try {
-    await connectMongo();
     // Update status
     await Doner.findByIdAndUpdate(id, { status }, { new: true });
     // Revalidate users
@@ -107,8 +107,8 @@ export const statusDoner = async (id: string, status: boolean) => {
 
 // * getDonersByGroup
 export const getDonersByGroup = async (groupId: string) => {
+  await connectMongo();
   try {
-    await connectMongo();
     // Get collections by group
     const collections = await Doner.find({ blood_group: groupId });
     // Convert ObjectId to string
